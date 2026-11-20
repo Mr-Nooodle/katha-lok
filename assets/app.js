@@ -133,7 +133,7 @@ function buildModel(data) {
   const series = (CFG.series || []).map((s) => {
     const re = new RegExp(s.match, 'i');
     const ids = new Set(longs.filter((v) => re.test(v.title)).map((v) => v.id));
-    const pl = playlists.find((p) => !p.used && (norm(p.title).includes(norm(s.hi)) || norm(p.title).includes(norm(s.en))));
+    const pl = playlists.find((p) => !p.used && (re.test(p.title) || norm(p.title).includes(norm(s.hi)) || norm(p.title).includes(norm(s.en))));
     if (pl) { pl.used = true; pl.videoIds.forEach((id) => { const v = byId.get(id); if (v && !v.isShort) ids.add(id); }); }
     return { ...s, episodes: [...ids].map((id) => byId.get(id)).sort(epSort), shorts: shorts.filter((v) => re.test(v.title)) };
   }).filter((s) => s.episodes.length);
