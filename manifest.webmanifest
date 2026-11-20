@@ -1,0 +1,14 @@
+{
+  "name": "Katha Lok · Untold stories of India",
+  "short_name": "Katha Lok",
+  "description": "Indian mythology, the epics and history, told as illustrated Hindi documentaries.",
+  "start_url": "./#/",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0D0C0B",
+  "theme_color": "#0D0C0B",
+  "icons": [
+    { "src": "assets/icon-512.png", "sizes": "800x800", "type": "image/png", "purpose": "any" },
+    { "src": "assets/logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
