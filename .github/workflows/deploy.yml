@@ -33,9 +33,14 @@ jobs:
         env:
           YT_API_KEY: ${{ secrets.YT_API_KEY }}
         run: node scripts/sync-videos.mjs
-      - name: Save the refreshed list in the repository
+      # The deployed site always gets the fresh file. It is committed back only when videos were
+      # added or removed (not for every view-count change), which keeps the history readable.
+      - name: Save the refreshed list when the set of videos changed
         run: |
-          if ! git diff --quiet -- data/videos.json; then
+          ids() { node -e "const d=JSON.parse(require('fs').readFileSync(0,'utf8'));console.log(d.videos.map(v=>v.id).sort().join(','))"; }
+          before=$(git show HEAD:data/videos.json | ids)
+          after=$(ids < data/videos.json)
+          if [ "$before" != "$after" ]; then
             git config user.name "katha-lok-bot"
             git config user.email "actions@users.noreply.github.com"
             git add data/videos.json
